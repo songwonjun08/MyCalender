@@ -24,7 +24,7 @@
 using namespace std;
 int totalDay[] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 
-class Day {
+class Date {
 public:
 	int year;
 	int month;
@@ -60,7 +60,7 @@ public:
 };
 
 class ScheduledDay {
-	Day day;
+	Date day;
 	vector<Schedule*> list;
 
 public:
@@ -150,7 +150,7 @@ public:
 };
 
 class Calender {
-	Day selected;
+	Date selected;
 	vector<ScheduledDay*> scheduledDay_list;
 	bool clear = false;
 
@@ -243,14 +243,18 @@ public:
 	}
 
 	void saveScheduleData() {
-		string fileName = getFileName();
 
-		ofstream out(fileName);
+		if (scheduledDay_list.empty() == FALSE) {
+			string fileName = getFileName();
 
-		for (int i = 0; i < scheduledDay_list.size(); i++) {
-			out << scheduledDay_list[i]->convertData() << "\n";
+			ofstream out(fileName);
+
+			for (int i = 0; i < scheduledDay_list.size(); i++) {
+				out << scheduledDay_list[i]->convertData() << "\n";
+			}
+			out.close();
 		}
-		out.close();
+
 
 	}
 
