@@ -308,22 +308,8 @@ public:
 	}
 
 	void printCalender() {
-
-		// 부드러운 화면 처리 위한
-		if (clear == true) {
-			system("cls");
-			clear = false;
-		}
-
-		for (int j = 0; j < scheduledDay_list.size(); j++) {
-			int a = scheduledDay_list[j]->get_day();
-			if (selected.day == a) {
-				clear = true;
-				break;
-			}
-		}
-		//------------------------//
-
+		system("cls");
+		
 		printf("=================================\n");
 		printf("←↑↓→ select day\n");
 		printf("< > next(prev) month\n");
@@ -471,8 +457,6 @@ int main()
 	calender.loadScheduleData();
 	calender.printCalender();
 
-	string ooo;
-
 	char key;
 	do {
 		key = getch();
@@ -544,11 +528,14 @@ int main()
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 
 		calender.printCalender();
-	} while (key != 27);
+		if (key == 27) {
+			// save
+			calender.saveScheduleData();
+			break;
+		}
+	} while (true);
 
-	// save
-	calender.saveScheduleData();
-
+	
 	// Heap영역 메모리 해제
 	calender.delScheduledDayListMemory();
 
